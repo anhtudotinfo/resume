@@ -4,7 +4,16 @@
 
 <h1>Contact Me</h1>
 
+<ul>
+    {% for comment in comments %}
+    <li>
+        <h1>{{ comment.subject }} - {{ comment.name }}</h1>
+        <img src="{{ comment.image.url }}">
+        <p>{{ comment.message }}</p>
+        <hr>
+    </li>
+    {% endfor %}
 
-
+</ul>
 
 {% endblock %}

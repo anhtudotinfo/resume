@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-i0o3db)2hp!!f(2^juc(jar8$u-6n0hg6^ed42&(u8rpe#gs+^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['3.97.228.3', 'andy.cara.com', '127.0.0.1']
 
 
 # Application definition
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main.apps.MainConfig',
+    'storages'
 ]
 
 MIDDLEWARE = [
@@ -114,11 +115,43 @@ USE_L10N = True
 
 USE_TZ = True
 
+# AWS s3 Settings
+
+AWS_ACCESS_KEY_ID = 'AKIA56MSENSFZRCBWNCI'  # new
+# AWS_ACCESS_KEY_ID = 'AKIA56MSENSFYYEEWNK3'  # old
+
+# AWS_SECRET_ACCESS_KEY = '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'  # old
+AWS_SECRET_ACCESS_KEY = '7kVhqXKihW0nMg3oSOENB6LQoSfpr+4lrfLKW+p3'  # new
+
+AWS_STORAGE_BUCKET_NAME = 'andy-static-bucket'
+
+AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+
+AWS_DEFAULT_ACL = 'public-read'
+
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400'
+}
+
+AWS_LOCATION = 'static'
+
+AWS_QUERYSTRING_AUTH = False
+
+AWS_HEADERS = {
+    'Access-Control-Allow-Orignin': '*'
+}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_URL = '/static/'
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
+
+STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
+
+MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
+# STATIC_URL = '/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

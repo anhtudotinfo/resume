@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .models import Comment
 
 # Create your views here.
 def home(request):
@@ -14,4 +15,4 @@ def inspirations(request):
     return render(request, 'main/inspirations.html', {})
 
 def contact(request):
-    return render(request, 'main/contact.html', {})
+    return render(request, 'main/contact.html', {'comments': Comment.objects.all()})
